@@ -34,7 +34,7 @@ void main()
         
     }
     
-    color = texColor ;//* (intensity * 150);
+    color = texColor;// * (intensity * 150);
 }
 
 
