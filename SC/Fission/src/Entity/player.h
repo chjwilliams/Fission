@@ -2,32 +2,28 @@
 
 #include <vector>
 
-#include "../../../src/sparky.h"
+#include "../../../Sparky-core/src/sparky.h"
 #include "entity.h"
-#include "alpha.h"
 #include "gamma.h"
-#include "moment.h"
+#include "neutron.h"
 
 class Player : public Entity
 {
 friend class Moment;
 private:
+	bool m_HasFired;
+	float m;
+	float j;
+	float m_FireAngle;
+	int m_Shots;
+	sparky::maths::vec2 m_Angle;
+	sparky::maths::vec3 m_ScreenPos;
+	sparky::maths::mat4& m_Transformation;
     sparky::graphics::Window* m_Window;
     sparky::graphics::Group* m_Group;
-    float m_Speed;
-    float moveX;
-    float moveY;
-    std::vector<Alpha*> m_Alphas;
-    std::vector<Gamma*> m_Gammas;
-    sparky::maths::vec2 m_Delta;
-    sparky::maths::mat4& m_Transformation;
-    sparky::maths::vec3 m_ScreenPos;
-    unsigned int m_FlinchTime;
-    
-    Moment* m_Moment;
-    float m;
-    float j;
-    
+	sparky::graphics::Sprite* m_ShotMark;
+	Neutron* m_Neutron;
+   
 public:
     Player(float x, float y, sparky::graphics::Window* window);
     
@@ -36,14 +32,9 @@ public:
     
     bool isOutOfBounds(Entity* entity);
     void setPosition(float x, float y);
-    void fission();
-    void addAlpha(Alpha* alpha);
-    void addGamma(Gamma* gamma);
-    Alpha* getAlpha(int i) { return m_Alphas[i]; }
-    const float getHealth() const { return m_Health; }
-    void setHealth(float health) { m_Health = health; }
-    inline const bool isSpinPositive() const { return m_PosSpin; }
-    inline const unsigned int getAlphaCount() { return m_Alphas.size(); }
-    inline std::vector<Alpha*> getAlphaList() { return m_Alphas; }
-    void changeMoment(Moment* moment);
+    void fireNeutron(Neutron* neutron);
+
+	inline const bool hasFired() const { return m_HasFired; }
+	inline const int getShots() const { return m_Shots; }
+	Neutron* getNeutron() { return m_Neutron; }
 };

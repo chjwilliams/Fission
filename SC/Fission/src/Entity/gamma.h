@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../src/sparky.h"
+#include "../../../Sparky-core/src/sparky.h"
 #include "entity.h"
 
 class Gamma : public Entity
