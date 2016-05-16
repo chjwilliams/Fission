@@ -8,7 +8,7 @@ LevelLayer::LevelLayer()
 #ifdef TRICHROME_EMSCRIPTEN
            new Shader("vert", "frag")
 #else
-           new Shader("TriChrome/res/Shaders/basic.vert", "TriChrome/res/Shaders/basic.frag")
+           new Shader("res/Shaders/level.vert", "res/Shaders/level.frag")
 #endif
            , maths::mat4::orthographic(0, 960, 0, 540, -1, 1))
 {
