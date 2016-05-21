@@ -2,8 +2,8 @@
 
 namespace sparky { namespace graphics {
 
-	Group::Group(const maths::mat4& transform)
-		: m_TransformationMatrix(transform)
+	Group::Group(const maths::mat4& transformMatrix)
+		: m_TransformationMatrix(transformMatrix)
 	{
 	}
 
@@ -16,6 +16,13 @@ namespace sparky { namespace graphics {
 	void Group::add(Renderable2D* renderable)
 	{
 		m_Renderables.push_back(renderable);
+	}
+
+	void Group::remove(Renderable2D* renderable)
+	{
+		for (int i = 0; i < m_Renderables.size(); i++)
+			if (m_Renderables[i]->getTexture()->getName() == renderable->getTexture()->getName())
+				m_Renderables.erase(m_Renderables.begin() + i);
 	}
 
 	void Group::submit(Renderer2D* renderer) const

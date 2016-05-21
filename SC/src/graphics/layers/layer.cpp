@@ -45,20 +45,11 @@ namespace sparky { namespace graphics {
 		m_Renderables.push_back(renderable);
 	}
 
-	void Layer::setLineThickness(float thickness)
+	void Layer::addTemp(Renderable2D* renderable)
 	{
-		m_Renderer->setLineThickness(thickness);
+		m_TempRenderables.push_back(renderable);
 	}
 
-	void Layer::drawLine(const maths::vec3& start, const maths::vec3& end, unsigned int color)
-	{
-		Line line;
-		line.start = start;
-		line.end = end;
-		line.color = color;
-		m_Lines.push_back(line);
-	}
-	
 	void Layer::render()
 	{
 		m_Shader->enable();
@@ -67,13 +58,13 @@ namespace sparky { namespace graphics {
 		for (const Renderable2D* renderable : m_Renderables)
 			renderable->submit(m_Renderer);
 
-		for (const Line& line : m_Lines)
-			m_Renderer->drawLine(line.start, line.end, line.color);
-
-		m_Lines.clear();
+		for (const Renderable2D* renderable : m_TempRenderables)
+			renderable->submit(m_Renderer);
 
 		m_Renderer->end();
 		m_Renderer->flush();
+
+		m_TempRenderables.clear();
 	}
 
 } }
