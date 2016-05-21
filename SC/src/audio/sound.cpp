@@ -28,8 +28,7 @@ namespace sparky { namespace audio {
 	{
 #ifdef SPARKY_EMSCRIPTEN
 #else
-		if (m_Sound != nullptr)
-			ga_sound_release(m_Sound);
+		ga_sound_release(m_Sound);
 #endif
 	}
 
