@@ -44,12 +44,12 @@ namespace sparky { namespace graphics {
 
 	Window::~Window()
 	{
-		TextureManager::clean();
 		FontManager::clean();
+		TextureManager::clean();
 		audio::SoundManager::clean();
 		glfwTerminate();
 	}
-
+	
 	bool Window::init()
 	{
 		if (!glfwInit())
@@ -122,10 +122,9 @@ namespace sparky { namespace graphics {
 		return m_MouseClicked[button];
 	}
 
-	void Window::getMousePosition(double& x, double& y) const
+	const maths::vec2& Window::getMousePosition() const
 	{
-		x = mx;
-		y = my;
+		return m_MousePosition;
 	}
 
 	void Window::clear() const
@@ -135,6 +134,18 @@ namespace sparky { namespace graphics {
 
  	void Window::update()
 	{
+		GLenum error = glGetError();
+		if (error != GL_NO_ERROR)
+			std::cout << "OpenGL Error: " << error << std::endl;
+
+		glfwSwapBuffers(m_Window);
+		glfwPollEvents();
+
+		audio::SoundManager::update();
+	}
+
+	void Window::updateInput()
+	{
 		for (int i = 0; i < MAX_KEYS; i++)
 			m_KeyTyped[i] = m_Keys[i] && !m_KeyState[i];
 
@@ -143,15 +154,6 @@ namespace sparky { namespace graphics {
 
 		memcpy(m_KeyState, m_Keys, MAX_KEYS);
 		memcpy(m_MouseState, m_MouseButtons, MAX_BUTTONS);
-
-		GLenum error = glGetError();
-		if (error != GL_NO_ERROR)
-			std::cout << "OpenGL Error: " << error << std::endl;
-
-		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
-
-		audio::SoundManager::update();
 	}
 
 	bool Window::closed() const
@@ -161,10 +163,10 @@ namespace sparky { namespace graphics {
 
 	void window_resize(GLFWwindow *window, int width, int height)
 	{
-		glViewport(0, 0, width, height);
+		glViewport(0, 0, 960, 540);
 		Window* win = (Window*)glfwGetWindowUserPointer(window);
-		win->m_Width = width;
-		win->m_Height = height;
+		win->m_Width = 960;
+		win->m_Height = 540;
 	}
 
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -182,8 +184,8 @@ namespace sparky { namespace graphics {
 	void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 	{
 		Window* win = (Window*)glfwGetWindowUserPointer(window);
-		win->mx = xpos;
-		win->my = ypos;
+		win->m_MousePosition.x = (float) xpos;
+		win->m_MousePosition.y = (float) ypos;
 	}
 
 } }

@@ -42,6 +42,7 @@ namespace sparky { namespace graphics {
 			renderer->submit(this);
 		}
 
+		void setSize(maths::vec2& newSize) { m_Size = newSize; }
 		void setColor(unsigned int color) { m_Color = color; }
 		void setColor(const maths::vec4& color)
 		{ 
@@ -56,6 +57,7 @@ namespace sparky { namespace graphics {
 		inline const maths::vec3& getPosition() const { return m_Position; }
 		inline const maths::vec2& getSize() const { return m_Size; }
 		inline const unsigned int getColor() const { return m_Color; }
+		inline const Texture* getTexture() const { return m_Texture;  }
 		inline const std::vector<maths::vec2>& getUV() const { return m_UV; }
 
 		inline const GLuint getTID() const { return m_Texture ? m_Texture->getID() : 0; }
