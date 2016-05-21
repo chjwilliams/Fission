@@ -4,7 +4,7 @@
 	#define GLFW_INCLUDE_ES3
 	#include <GLFW/glfw3.h>
 #else
-	#include <GL/glew.h>
+#include <gl\glew.h>
 #endif
 
 namespace sparky { namespace graphics {
