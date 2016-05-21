@@ -11,6 +11,7 @@
 #include "graphics/window.h"
 #include "graphics/layers/layer.h"
 #include "graphics/layers/group.h"
+#include "graphics/texture_manager.h"
 
 #include "audio/sound.h"
 #include "audio/sound_manager.h"
@@ -40,7 +41,6 @@ namespace sparky {
 		Sparky()
 			: m_FramesPerSecond(0), m_UpdatesPerSecond(0)
 		{
-
 		}
 
 		virtual ~Sparky()
@@ -92,6 +92,7 @@ namespace sparky {
 				m_Window->clear();
 				if (m_Timer->elapsed() - updateTimer > updateTick)
 				{
+					m_Window->updateInput();
 					update();
 					updates++;
 					updateTimer += updateTick;
